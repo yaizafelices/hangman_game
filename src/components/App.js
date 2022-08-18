@@ -1,25 +1,21 @@
-
 import "../styles/scss/main.scss";
 
-import { useState } from "react";
+import {useEffect, useState} from 'react';
 
 function App() {
-  // const [numberOfErrors, setNumberOfErrors] = useState(0);
 
   const [lastLetter, setLastLetter] = useState('');
   const [warningMsg, setWarningMsg] = useState('');
-
-  const[word, setWord] = useState('katakroker');
-
+  const[word, setWord] = useState('');
   const[userLetters, setUserLetters] = useState([]);
 
-
-
-  // const handleIncrease = (event) => {
-  //   event.preventDefault();
-  //   setNumberOfErrors(numberOfErrors + 1);
-  // }
-
+  useEffect(() => {
+    fetch('https://adalab-api.herokuapp.com/api/random/word/')
+    .then((response) => response.json())
+    .then((responseData) => {
+      setWord(responseData.word);
+    });
+}, []);
 
   const handleInput =(event) =>{
     const inputValue = event.currentTarget.value.toLowerCase();
@@ -49,7 +45,7 @@ function App() {
       })
     )}
 
-  const renderErrorLetters = () => {
+  const renderErrorLetters = (event) => {
     const errorLetters = userLetters.filter((letterItem) => (!word.includes(letterItem)))
     return errorLetters.map((letterItem, index) => {
       return (<li key={index} className="letter">{letterItem}</li>)})
