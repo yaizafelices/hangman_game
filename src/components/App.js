@@ -22,7 +22,7 @@ function App() {
 
 
   const handleInput =(event) =>{
-    const inputValue = event.currentTarget.value;
+    const inputValue = event.currentTarget.value.toLowerCase();
     const valided = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]{1}$/;
     if (valided.test(inputValue)){
       setLastLetter(inputValue);
@@ -48,6 +48,12 @@ function App() {
         
       })
     )}
+
+  const renderErrorLetters = () => {
+    const errorLetters = userLetters.filter((letterItem) => (!word.includes(letterItem)))
+    return errorLetters.map((letterItem, index) => {
+      return (<li key={index} className="letter">{letterItem}</li>)})
+  }
   
 
   return (
@@ -66,11 +72,7 @@ function App() {
         <div className="error">
           <h2 className="title">Letras falladas:</h2>
           <ul className="letters">
-            <li className="letter">f</li>
-            <li className="letter">q</li>
-            <li className="letter">h</li>
-            <li className="letter">p</li>
-            <li className="letter">x</li>
+            {renderErrorLetters()}
           </ul>
         </div>
         <form className="form">
