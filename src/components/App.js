@@ -11,7 +11,7 @@ function App() {
 
   const[word, setWord] = useState('katakroker');
 
-  const[userLetters, setUserLetters] = useState('');
+  const[userLetters, setUserLetters] = useState([]);
 
 
 
@@ -26,7 +26,7 @@ function App() {
     const valided = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü]{1}$/;
     if (valided.test(inputValue)){
       setLastLetter(inputValue);
-      setUserLetters(inputValue);
+      setUserLetters([...userLetters, inputValue]);
       setWarningMsg("");
     }
     else{
@@ -39,10 +39,16 @@ function App() {
     const wordLetters = word.split('');
     return(
       wordLetters.map((letterItem, index) => {
-        return (<li key={index} className="letter"></li>)
+        if(!userLetters.includes(letterItem)) {
+          return (<li key={index} className="letter"></li>)
+        }
+        else {
+          return (<li key={index} className="letter">{letterItem}</li>)
+        }
+        
       })
-    )
-  }
+    )}
+  
 
   return (
     <div className="page">
