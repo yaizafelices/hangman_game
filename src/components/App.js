@@ -4,7 +4,7 @@ import "../styles/scss/main.scss";
 import { useState } from "react";
 
 function App() {
-  const [numberOfErrors, setNumberOfErrors] = useState(0);
+  // const [numberOfErrors, setNumberOfErrors] = useState(0);
 
   const [lastLetter, setLastLetter] = useState('');
   const [warningMsg, setWarningMsg] = useState('');
@@ -15,10 +15,10 @@ function App() {
 
 
 
-  const handleIncrease = (event) => {
-    event.preventDefault();
-    setNumberOfErrors(numberOfErrors + 1);
-  }
+  // const handleIncrease = (event) => {
+  //   event.preventDefault();
+  //   setNumberOfErrors(numberOfErrors + 1);
+  // }
 
 
   const handleInput =(event) =>{
@@ -87,11 +87,10 @@ function App() {
             value={lastLetter}
             onChange={handleInput}
           />
-          <button className="form__btnIncrease" onClick={handleIncrease}>Incrementar</button>
           <p className="form__warning">{warningMsg}</p>
         </form>
       </section>
-      <section className= {`dummy error-${numberOfErrors}`}>
+      <section className= {`dummy error-${renderErrorLetters().length}`}>
         <span className="error-13 eye"></span>
         <span className="error-12 eye"></span>
         <span className="error-11 line"></span>
