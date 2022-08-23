@@ -1,6 +1,8 @@
+import {useEffect, useState} from 'react';
+
 import "../styles/scss/main.scss";
 
-import {useEffect, useState} from 'react';
+import getWordFromApi from '../services/getWordFromApi';
 
 function App() {
 
@@ -10,10 +12,8 @@ function App() {
   const[userLetters, setUserLetters] = useState([]);
 
   useEffect(() => {
-    fetch('https://adalab-api.herokuapp.com/api/random/word/')
-    .then((response) => response.json())
-    .then((responseData) => {
-      setWord(responseData.word);
+    getWordFromApi().then((word) => {
+      setWord(word);
     });
 }, []);
 
