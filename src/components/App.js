@@ -1,8 +1,19 @@
 import {useEffect, useState} from 'react';
 
-import "../styles/scss/main.scss";
+import "../styles/App.scss";
+import "../styles/Form.scss";
+// import "../styles/Instruction.scss";
+// import "../styles/Loading.scss";
 
-import getWordFromApi from '../services/getWordFromApi';
+
+import getWordFromApi from '../services/GetWordFromApi';
+
+import Header from './Header';
+import Footer from './Footer';
+import Dummy from './Dummy';
+import SolutionLetters from './SolutionLetters';
+import ErrorLetters from './ErrorLetters';
+import Form from './Form';
 
 function App() {
 
@@ -31,6 +42,16 @@ function App() {
     }
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+
+  const handleKeyDown = (ev) => {
+    //Esta función es para que no tenga que borrar para escribir otra letra, que en el momento que escriba otra letra se borre la anterior
+    ev.target.setSelectionRange(0, 1);
+  };
+
+
   const renderSolutionLetters = () =>{
     const wordLetters = word.split('');
     return(
@@ -54,55 +75,16 @@ function App() {
 
   return (
     <div className="page">
-    <header>
-      <h1 className="header__title">Juego del ahorcado</h1>
-    </header>
+    <Header />
     <main className="main">
       <section>
-        <div className="solution">
-          <h2 className="title">Solución:</h2>
-          <ul className="letters">
-            {renderSolutionLetters()}
-          </ul>
-        </div>
-        <div className="error">
-          <h2 className="title">Letras falladas:</h2>
-          <ul className="letters">
-            {renderErrorLetters()}
-          </ul>
-        </div>
-        <form className="form">
-          <label className="title" htmlFor="last-letter">Escribe una letra:</label>
-          <input
-            autoComplete="off"
-            className="form__input"
-            maxLength="1"
-            type="text"
-            name="last-letter"
-            id="last-letter"
-            value={lastLetter}
-            onChange={handleInput}
-          />
-          <p className="form__warning">{warningMsg}</p>
-        </form>
+        <SolutionLetters renderSolutionLetters = {renderSolutionLetters()}/>
+        <ErrorLetters renderErrorLetters={renderErrorLetters()}/>
+        <Form handleInput={handleInput} lastLetter={lastLetter} warningMsg ={warningMsg} handleSubmit={handleSubmit} handleKeyDown={handleKeyDown}/>
       </section>
-      <section className= {`dummy error-${renderErrorLetters().length}`}>
-        <span className="error-13 eye"></span>
-        <span className="error-12 eye"></span>
-        <span className="error-11 line"></span>
-        <span className="error-10 line"></span>
-        <span className="error-9 line"></span>
-        <span className="error-8 line"></span>
-        <span className="error-7 line"></span>
-        <span className="error-6 head"></span>
-        <span className="error-5 line"></span>
-        <span className="error-4 line"></span>
-        <span className="error-3 line"></span>
-        <span className="error-2 line"></span>
-        <span className="error-1 line"></span>
-      </section>
+      <Dummy renderErrorLetters = {renderErrorLetters().length}/>
     </main>
-    <footer className="footer__name">Created by Yaiza Soria Felices 2022</footer>
+    <Footer />
   </div>
   );
 }
